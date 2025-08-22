@@ -124,6 +124,30 @@ The first thing to note about a hybrid port is that the *ingress filter* has to 
 
 The *egress* configuration is the same as a normal tagged port
 
+### Updating a trunk
+
+Updating requires the annoying id number which is **dynamically printed and unpredictable**, meaning we need to run a `print` command for every operation
+
+Ingress does not need to be updated unless the port is removed
+Egress is updated by doign the following steps
+1. `/interface/bridge/vlan/export` to show the running config
+2. `/interface/bridge/vlan/print` to show the dynamic entries and IDs
+3. `/interface/bridge/vlan/set tagged=lag1,ether1,ether2,ether10 numbers=3,4,5`
+
+`numbers` are a single or collection of IDs from the `print` command executed before
+`tagged` are a single or collection of interface names associated with a given VLAN as per your requirement (add or delete) from the configuration shown in `export`
+
+**Be especially carful to match the ID line to the VLAN config and interfaces you need**
+
+### Updating an access port
+
+Much like the trunk, we need a few steps
+1. `/interface/bridge/port/export` to show the running config
+2. `/interface/bridge/port/print where interface=ether5` to show the dynamic entries and IDs
+3. `/interface/bridge/port/set pvid=120 numbers=12`
+
+I highly recomend using a single entry in `numbers` to the ID of the matching entry in `print`. Also double check that it matches your target interface against the running config from `export` when setting the `pvid`.
+
 ### Checking for operation
 
 Some useful commands to check for proper operation of VLANs
