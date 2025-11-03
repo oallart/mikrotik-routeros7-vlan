@@ -1,0 +1,5 @@
+mk-sw1.error.lan/
+.aws/
+.terraform.lock.hcl
+.terraform/
+*.sw*
