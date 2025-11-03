@@ -281,6 +281,7 @@ mk-sw1.yours.lan:
 
 Which is loaded to be processed as such:
 
+```
 locals {
   # Load yaml by workspace name
   yaml_file = "${terraform.workspace}/config.yaml"
@@ -288,7 +289,7 @@ locals {
   # Decode the inventory YAML file
   config = yamldecode(file(local.yaml_file))
 }
-
+```
 
 #### computing for LAG interfaces
 
